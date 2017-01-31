@@ -22,6 +22,7 @@
 
         <div class="form-group">
             <label for="path">Upload file <sup class="text-danger">*</sup></label>
+            <p class="form-control"> {{ $movie->path }} </p>
             <input type="file" class="form-control" name="path" id="path" value="{{ $movie->path }}">
         </div>
 

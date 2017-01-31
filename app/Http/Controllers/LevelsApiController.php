@@ -22,4 +22,6 @@ class LevelsApiController extends Controller
     {
         return Level::findOrFail($id);
     }
+
+
 }

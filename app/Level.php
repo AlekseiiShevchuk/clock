@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Level extends Model
 {
-    public $timestamps = false;
     protected $fillable = ['name', 'description'];
     protected $guarded = ['id', '_token'];
+    protected $hidden = ['updated_at','created_at'];
 
     public function setDescriptionAttribute($input)
     {

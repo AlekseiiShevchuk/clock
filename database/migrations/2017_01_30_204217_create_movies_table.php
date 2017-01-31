@@ -20,6 +20,7 @@ class CreateMoviesTable extends Migration
             $table->string('path');
             $table->string('answer');
             $table->integer('level_id');
+            $table->timestamps();
 
         });
     }

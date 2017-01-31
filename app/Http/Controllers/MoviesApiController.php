@@ -22,4 +22,10 @@ class MoviesApiController extends Controller
     {
         return Movie::findOrFail($id);
     }
+
+    public function showMoviesLevelID($id)
+    {
+        return Movie::where('level_id', $id)->get();
+
+    }
 }

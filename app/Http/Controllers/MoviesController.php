@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use Response;
-use Request;
+//use Request;
 
 use App\Movie;
 use App\Level;
 
+use App\Http\Controllers\Traits\FileUploadTrait;
+
+use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreImagesRequest;
+use App\Http\Requests\UpdateImagesRequest;
+//use App\Http\Controllers\Traits\FileUploadTrait;
+
 class MoviesController extends Controller
 {
+    use FileUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +28,7 @@ class MoviesController extends Controller
     {
         $data = [
             'pageTitle' => 'Movies',
+//            'movies' => Movie::with('levels')->get()
             'movies' => Movie::all()
         ];
 
@@ -48,8 +58,8 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
-        $input = Request::all();
-        Movie::create($input);
+        $request = $this->saveFiles($request);
+        $movies = Movie::create($request->all());
         return redirect()->action('MoviesController@index');
     }
 
@@ -91,7 +101,7 @@ class MoviesController extends Controller
     public function update(Request $request, $id)
     {
         $movie = Movie::findOrFail($id);
-        $movie->update(Request::all());
+        $movie->update($request->all());
 
         return redirect()->action('MoviesController@index');
     }

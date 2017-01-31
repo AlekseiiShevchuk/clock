@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
-    public $timestamps = false;
-//    protected $fillable = ['name', 'description', 'path', 'answer', 'level_id'];
+    protected $fillable = ['name', 'description', 'path', 'answer', 'level_id'];
     protected $guarded = ['id', '_token'];
+    protected $hidden = ['updated_at','created_at'];
 
     public function setNameAttribute($input)
     {
