@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="page-header">
-        <h1>{{ $pageTitle }} <a href="{{ url('level/create') }}" class="btn btn-success pull-right">Add new Level</a></h1>
+        <h1>{{ $pageTitle }} <a href="{{ url('levels/create') }}" class="btn btn-success pull-right">Add new Level</a></h1>
     </div>
 
     <table class="table table-striped">

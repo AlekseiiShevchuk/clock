@@ -6,7 +6,7 @@
         <h1>{{ $pageTitle }}</h1>
     </div>
 
-    <form action="{{ url('/movie/store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/movies/store') }}" method="POST" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 

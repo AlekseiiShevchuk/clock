@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 
 class MoviesApiController extends Controller
 {
-    public function getAllMovies(Request $request)
+    public function getAllMovies()
     {
-        $movies = Movie::all();
-        return Response::json(array(
-            'error' => false,
-            'modes' => $movies,
-            'status_code' => 200
-        ));
+//        $movies = Movie::all();
+//        return Response::json(array(
+//            'error' => false,
+//            'modes' => $movies,
+//            'status_code' => 200
+//        ));
+        return Movie::all();
     }
 
     public function showMoviesId($id)

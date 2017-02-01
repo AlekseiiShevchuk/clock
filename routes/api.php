@@ -21,5 +21,5 @@ Route::get('/v1/levels', 'LevelsApiController@getAllLevels');
 Route::get('/v1/levels/{id}', 'LevelsApiController@showLevelsId');
 
 Route::get('/v1/movies', 'MoviesApiController@getAllMovies');
-Route::get('/v1/movie/{id}', 'MoviesApiController@showMoviesId');
-Route::get('/v1/movie/level/{id}', 'MoviesApiController@showMoviesLevelID');
+Route::get('/v1/movies/{id}', 'MoviesApiController@showMoviesId');
+Route::get('/v1/movies/{id}/levels', 'MoviesApiController@showMoviesLevelID');

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="page-header">
-        <h1>{{ $pageTitle }} <a href="{{ url('movie/create') }}" class="btn btn-success pull-right">Add new Movie</a></h1>
+        <h1>{{ $pageTitle }} <a href="{{ url('movies/create') }}" class="btn btn-success pull-right">Add new Movie</a></h1>
     </div>
 
     <table class="table table-striped">

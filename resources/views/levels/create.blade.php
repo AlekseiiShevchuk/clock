@@ -6,7 +6,7 @@
         <h1>{{ $pageTitle }}</h1>
     </div>
 
-    <form action="{{ url('/level/store') }}" method="POST">
+    <form action="{{ url('/levels/store') }}" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="form-group">
