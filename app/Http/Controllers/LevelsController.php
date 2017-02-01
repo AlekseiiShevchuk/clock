@@ -18,7 +18,8 @@ class LevelsController extends Controller
     {
         $data= [
             'pageTitle' => 'Levels list',
-            'levels' => Level::all()
+//            'levels' => Level::all()
+            'levels' => Level::with('movies')->get()
         ];
         return view('levels/index', $data);
     }

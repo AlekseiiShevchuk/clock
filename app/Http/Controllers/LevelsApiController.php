@@ -24,5 +24,11 @@ class LevelsApiController extends Controller
         return Level::findOrFail($id);
     }
 
+    public function showLevelMovies($id)
+    {
+        $movies = Level::with('movies')->find($id);
+        return $movies;
+    }
+
 
 }

@@ -22,6 +22,6 @@ class Movie extends Model
 
     public function levels()
     {
-        return $this->hasOne('App\Level', 'id');
+        return $this->belongsTo('App\Level', 'level_id');
     }
 }

@@ -13,7 +13,7 @@
             <th>Description</th>
             <th>Path</th>
             <th>Answer</th>
-            <th>Level ID</th>
+            <th>Level</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
                 <td>{{ $movie->description }}</td>
                 <td>{{ $movie->path }}</td>
                 <td>{{ $movie->answer }}</td>
-                <td>{{ $movie->id }}</td>
+                <td>{{ $movie->levels->name }}</td>
                 <td>
                     <a href="{{ action('MoviesController@edit', $movie->id) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ action('MoviesController@destroy', $movie->id) }}" method="POST" style="display: inline-block;">

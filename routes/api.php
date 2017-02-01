@@ -19,6 +19,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/v1/levels', 'LevelsApiController@getAllLevels');
 Route::get('/v1/levels/{id}', 'LevelsApiController@showLevelsId');
+Route::get('/v1/levels/{id}/movies', 'LevelsApiController@showLevelMovies');
 
 Route::get('/v1/movies', 'MoviesApiController@getAllMovies');
 Route::get('/v1/movies/{id}', 'MoviesApiController@showMoviesId');

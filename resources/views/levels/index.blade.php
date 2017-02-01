@@ -11,6 +11,7 @@
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Movies</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -19,6 +20,11 @@
                 <tr>
                     <td>{{ $level->name }}</td>
                     <td>{{ $level->description }}</td>
+                    <td>
+                        @foreach ($level->movies as $item)
+                            <span class="label label-default">{{ $item->name }}</span>
+                        @endforeach
+                    </td>
                     <td>
                         <a href="{{ action('LevelsController@edit', $level->id) }}" class="btn btn-primary">Edit</a>
                         <form action="{{ action('LevelsController@destroy', $level->id) }}" method="POST" style="display: inline-block;">

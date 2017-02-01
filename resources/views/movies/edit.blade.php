@@ -32,6 +32,7 @@
         </div>
 
         <div class="form-group">
+            <label for="level">Level <sup class="text-danger">*</sup></label>
             <select class="form-control" name="level_id">
                 @foreach($levels as $level)
                     <option value="{{ $level->id }}">{{ $level->name }}</option>

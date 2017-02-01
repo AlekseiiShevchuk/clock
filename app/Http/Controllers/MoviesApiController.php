@@ -27,6 +27,5 @@ class MoviesApiController extends Controller
     public function showMoviesLevelID($id)
     {
         return Movie::where('level_id', $id)->get();
-
     }
 }

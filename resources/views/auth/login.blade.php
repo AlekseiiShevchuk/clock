@@ -47,13 +47,6 @@
                             </div>
                         </div>
 
-                        {{--<div class="form-group">--}}
-                            {{--<div class="col-md-6 col-md-offset-4">--}}
-                                {{--<a href="{{ route('auth.password.reset') }}">Forgot your password?</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <label>
@@ -65,11 +58,11 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit"
-                                        class="btn btn-primary"
-                                        style="margin-right: 15px;">
+                                <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
+                                <span style="padding: 0 20px;">- OR -</span>
+                                <a href="{{ url('/register') }}" class="btn btn-default">Register</a>
                             </div>
                         </div>
                     </form>

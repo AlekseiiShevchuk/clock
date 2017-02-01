@@ -28,8 +28,8 @@ class MoviesController extends Controller
     {
         $data = [
             'pageTitle' => 'Movies',
-//            'movies' => Movie::with('levels')->get()
-            'movies' => Movie::all()
+            'movies' => Movie::with('levels')->get()
+//            'movies' => Movie::all()
         ];
 
         return view('movies/index', $data);
