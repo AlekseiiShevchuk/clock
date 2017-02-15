@@ -1,26 +1,57 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+    <h3 class="page-title">@lang('quickadmin.levels.title')</h3>
+    
+    {!! Form::model($level, ['method' => 'PUT', 'route' => ['levels.update', $level->id]]) !!}
 
-    <div class="page-header">
-        <h1>{{ $level->name }}</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @lang('quickadmin.edit')
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('name', 'Name*', ['class' => 'control-label']) !!}
+                    {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('name'))
+                        <p class="help-block">
+                            {{ $errors->first('name') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
+                    {!! Form::text('description', old('description'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('description'))
+                        <p class="help-block">
+                            {{ $errors->first('description') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('language_id', 'Language*', ['class' => 'control-label']) !!}
+                    {!! Form::select('language_id', $languages, old('language_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('language_id'))
+                        <p class="help-block">
+                            {{ $errors->first('language_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            
+        </div>
     </div>
 
-    <form action="{{ action('LevelsController@update', $level->id) }}" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-        <div class="form-group">
-            <label for="name">Level Name</label>
-            <input type="text" class="form-control" name="name" id="name" value="{{ $level->name }}">
-        </div>
-
-        <div class="form-group">
-            <label for="description">Level Description</label>
-            <input type="text" class="form-control" name="description" id="description" value="{{ $level->description }}">
-        </div>
-
-        <input type="submit" class="btn btn-success" value="Save">
-
-    </form>
-
+    {!! Form::submit(trans('quickadmin.update'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::close() !!}
 @stop
+

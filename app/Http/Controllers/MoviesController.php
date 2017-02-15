@@ -2,121 +2,174 @@
 
 namespace App\Http\Controllers;
 
-use Response;
-//use Request;
-
-use App\Movie;
-use App\Level;
-
 use App\Http\Controllers\Traits\FileUploadTrait;
-
+use App\Http\Requests\StoreMoviesRequest;
+use App\Http\Requests\UpdateMoviesRequest;
+use App\Level;
+use App\Movie;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\StoreImagesRequest;
-use App\Http\Requests\UpdateImagesRequest;
-//use App\Http\Controllers\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\Gate;
 
 class MoviesController extends Controller
 {
     use FileUploadTrait;
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of Movie.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $data = [
-            'pageTitle' => 'Movies',
-            'movies' => Movie::with('levels')->get()
-//            'movies' => Movie::all()
-        ];
+        if (!Gate::allows('movie_access')) {
+            return abort(401);
+        }
+        $movies = Movie::all();
 
-        return view('movies/index', $data);
+        return view('movies.index', compact('movies'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating new Movie.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $data = [
-            'pageTitle' => 'Add new Movie',
-            'levels' => Level::all()
+        if (!Gate::allows('movie_create')) {
+            return abort(401);
+        }
+        $relations = [
+            'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+                'id')->prepend('Please select', ''),
         ];
-
-        return view('movies/create', $data);
+        //add language for levels list
+        foreach ($relations['levels'] as $levelId => $levelName) {
+            if ($levelId < 1){continue;}
+            $levelLanguage = Level::find($levelId)->language->name;
+            $relations['levels'][$levelId] .= ' | ' . $levelLanguage;
+        }
+        return view('movies.create', $relations);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Movie in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreMoviesRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMoviesRequest $request)
     {
+        if (!Gate::allows('movie_create')) {
+            return abort(401);
+        }
         $request = $this->saveFiles($request);
-        $movies = Movie::create($request->all());
-        return redirect()->action('MoviesController@index');
+        $movie = Movie::create($request->all());
+
+        return redirect()->route('movies.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing Movie.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data = [
-            'pageTitle' => 'Edit Movie',
-            'movie' => Movie::find($id),
-            'levels' => Level::all()
+        if (!Gate::allows('movie_edit')) {
+            return abort(401);
+        }
+        $relations = [
+            'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+                'id')->prepend('Please select', ''),
         ];
 
-        return view('movies/edit', $data);
+        $movie = Movie::findOrFail($id);
+
+        return view('movies.edit', compact('movie') + $relations);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Movie in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateMoviesRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMoviesRequest $request, $id)
     {
+        if (!Gate::allows('movie_edit')) {
+            return abort(401);
+        }
+        $request = $this->saveFiles($request);
         $movie = Movie::findOrFail($id);
         $movie->update($request->all());
 
-        return redirect()->action('MoviesController@index');
+        return redirect()->route('movies.index');
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * Display Movie.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        if (!Gate::allows('movie_view')) {
+            return abort(401);
+        }
+        $relations = [
+            'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+                'id')->prepend('Please select', ''),
+        ];
+
+        $movie = Movie::findOrFail($id);
+
+        return view('movies.show', compact('movie') + $relations);
+    }
+
+
+    /**
+     * Remove Movie from storage.
+     *
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        if (!Gate::allows('movie_delete')) {
+            return abort(401);
+        }
         $movie = Movie::findOrFail($id);
         $movie->delete();
 
-        return redirect()->action('MoviesController@index');
+        return redirect()->route('movies.index');
     }
+
+    /**
+     * Delete all selected Movie at once.
+     *
+     * @param Request $request
+     */
+    public function massDestroy(Request $request)
+    {
+        if (!Gate::allows('movie_delete')) {
+            return abort(401);
+        }
+        if ($request->input('ids')) {
+            $entries = Movie::whereIn('id', $request->input('ids'))->get();
+
+            foreach ($entries as $entry) {
+                $entry->delete();
+            }
+        }
+    }
+
 }

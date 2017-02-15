@@ -1,27 +1,53 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Movie
+ *
+ * @package App
+ * @property string $name
+ * @property string $description
+ * @property string $movie_file
+ * @property string $answer
+ * @property string $level
+ * @property string $language
+*/
 class Movie extends Model
 {
-    protected $fillable = ['name', 'description', 'path', 'answer', 'level_id'];
-    protected $guarded = ['id', '_token'];
-    protected $hidden = ['updated_at','created_at'];
+    use SoftDeletes;
 
-    public function setNameAttribute($input)
+    protected $fillable = ['name', 'description', 'movie_file', 'answer', 'level_id', 'language_id'];
+    
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setLevelIdAttribute($input)
     {
-        $this->attributes['name'] = $input ? $input : null;
+        $this->attributes['level_id'] = $input ? $input : null;
     }
 
-    public function setDescriptionAttribute($input)
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setLanguageIdAttribute($input)
     {
-        $this->attributes['description'] = $input ? $input : null;
+        $this->attributes['language_id'] = $input ? $input : null;
     }
-
-    public function levels()
+    
+    public function level()
     {
-        return $this->belongsTo('App\Level', 'level_id');
+        return $this->belongsTo(Level::class, 'level_id')->withTrashed();
     }
+    
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id')->withTrashed();
+    }
+    
 }

@@ -25,6 +25,89 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        $user = \Auth::user();
+
+        
+        // Auth gates for: User management
+        Gate::define('user_management_access', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+
+        // Auth gates for: Roles
+        Gate::define('role_access', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('role_create', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('role_edit', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('role_view', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('role_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: Users
+        Gate::define('user_access', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('user_create', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('user_edit', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('user_view', function ($user) {
+            return in_array($user->role_id, [1, 2]);
+        });
+        Gate::define('user_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: Languages
+        Gate::define('language_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('language_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: Levels
+        Gate::define('level_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('level_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('level_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('level_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('level_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: Movies
+        Gate::define('movie_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('movie_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('movie_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('movie_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('movie_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
     }
 }

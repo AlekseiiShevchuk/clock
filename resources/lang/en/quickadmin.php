@@ -1,0 +1,25 @@
+<?php
+
+return [
+	'create' => 'Create',
+	'save' => 'Save',
+	'edit' => 'Edit',
+	'view' => 'View',
+	'update' => 'Update',
+	'list' => 'List',
+	'no_entries_in_table' => 'No entries in table',
+	'custom_controller_index' => 'Custom controller index.',
+	'logout' => 'Logout',
+	'add_new' => 'Add new',
+	'are_you_sure' => 'Are you sure?',
+	'back_to_list' => 'Back to list',
+	'dashboard' => 'Dashboard',
+	'delete' => 'Delete',
+	'quickadmin_title' => 'Clock',
+		'user-management' => [		'title' => 'User Management',		'created_at' => 'Time',		'fields' => [		],	],
+		'roles' => [		'title' => 'Roles',		'created_at' => 'Time',		'fields' => [			'title' => 'Title',		],	],
+		'users' => [		'title' => 'Users',		'created_at' => 'Time',		'fields' => [			'name' => 'Name',			'email' => 'Email',			'password' => 'Password',			'role' => 'Role',			'remember-token' => 'Remember token',		],	],
+		'languages' => [		'title' => 'Languages',		'created_at' => 'Time',		'fields' => [			'abbreviation' => 'Abbreviation',			'name' => 'Name',			'is-active-for-admin' => 'Is active for admin',			'is-active-for-users' => 'Is active for users',		],	],
+		'levels' => [		'title' => 'Levels',		'created_at' => 'Time',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'language' => 'Language',		],	],
+		'movies' => [		'title' => 'Movies',		'created_at' => 'Time',		'fields' => [			'name' => 'Name',			'description' => 'Description',			'movie-file' => 'Movie file',			'answer' => 'Answer',			'level' => 'Level',			'language' => 'Language',		],	],
+];

@@ -1,40 +1,85 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+    <h3 class="page-title">@lang('quickadmin.movies.title')</h3>
+    @can('movie_create')
+    <p>
+        <a href="{{ route('movies.create') }}" class="btn btn-success">@lang('quickadmin.add_new')</a>
+    </p>
+    @endcan
 
-    <div class="page-header">
-        <h1>{{ $pageTitle }} <a href="{{ url('movies/create') }}" class="btn btn-success pull-right">Add new Movie</a></h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @lang('quickadmin.list')
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-bordered table-striped {{ count($movies) > 0 ? 'datatable' : '' }} dt-select">
+                <thead>
+                    <tr>
+                        @can('movie_delete')
+                            <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
+                        @endcan
+
+                        <th>@lang('quickadmin.movies.fields.name')</th>
+                        <th>@lang('quickadmin.movies.fields.description')</th>
+                        <th>@lang('quickadmin.movies.fields.movie-file')</th>
+                        <th>@lang('quickadmin.movies.fields.answer')</th>
+                        <th>@lang('quickadmin.movies.fields.level')</th>
+                        <th>@lang('quickadmin.movies.fields.language')</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    @if (count($movies) > 0)
+                        @foreach ($movies as $movie)
+                            <tr data-entry-id="{{ $movie->id }}">
+                                @can('movie_delete')
+                                    <td></td>
+                                @endcan
+
+                                <td>{{ $movie->name }}</td>
+                                <td>{{ $movie->description }}</td>
+                                <td>@if($movie->movie_file)<a href="{{ asset('uploads/'.$movie->movie_file) }}" target="_blank">Download file</a>@endif</td>
+                                <td>{{ $movie->answer }}</td>
+                                <td>{{ $movie->level->name or '' }}</td>
+                                <td>{{ $movie->language->name or '' }}</td>
+                                <td>
+                                    @can('movie_view')
+                                    <a href="{{ route('movies.show',[$movie->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
+                                    @endcan
+                                    @can('movie_edit')
+                                    <a href="{{ route('movies.edit',[$movie->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
+                                    @endcan
+                                    @can('movie_delete')
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("quickadmin.are_you_sure")."');",
+                                        'route' => ['movies.destroy', $movie->id])) !!}
+                                    {!! Form::submit(trans('quickadmin.delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="10">@lang('quickadmin.no_entries_in_table')</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Path</th>
-            <th>Answer</th>
-            <th>Level</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($movies as $movie)
-            <tr>
-                <td>{{ $movie->name }}</td>
-                <td>{{ $movie->description }}</td>
-                <td>{{ $movie->path }}</td>
-                <td>{{ $movie->answer }}</td>
-                <td>{{ $movie->levels->name }}</td>
-                <td>
-                    <a href="{{ action('MoviesController@edit', $movie->id) }}" class="btn btn-primary">Edit</a>
-                    <form action="{{ action('MoviesController@destroy', $movie->id) }}" method="POST" style="display: inline-block;">
-                        {{ csrf_field() }}
-                        <input class="btn btn-danger" type="submit" value="Delete">
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-
 @stop
+
+@section('javascript') 
+    <script>
+        @can('movie_delete')
+            window.route_mass_crud_entries_destroy = '{{ route('movies.mass_destroy') }}';
+        @endcan
+
+    </script>
+@endsection

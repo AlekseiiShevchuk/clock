@@ -1,21 +1,41 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Level
+ *
+ * @package App
+ * @property string $name
+ * @property string $description
+ * @property string $language
+*/
 class Level extends Model
 {
-    protected $fillable = ['name', 'description'];
-    protected $guarded = ['id', '_token'];
-    protected $hidden = ['updated_at','created_at'];
+    use SoftDeletes;
 
-    public function setDescriptionAttribute($input)
+    protected $fillable = ['name', 'description', 'language_id'];
+    
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setLanguageIdAttribute($input)
     {
-        $this->attributes['description'] = $input ? $input : null;
+        $this->attributes['language_id'] = $input ? $input : null;
     }
+    
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id')->withTrashed();
+    }
+
     public function movies()
     {
-        return $this->hasMany('App\Movie');
+        return $this->hasMany(Movie::class);
     }
+    
 }

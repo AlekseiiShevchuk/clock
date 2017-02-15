@@ -1,47 +1,97 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+    <h3 class="page-title">@lang('quickadmin.movies.title')</h3>
+    
+    {!! Form::model($movie, ['method' => 'PUT', 'route' => ['movies.update', $movie->id], 'files' => true,]) !!}
 
-    <div class="page-header">
-        <h1>{{ $pageTitle }}</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @lang('quickadmin.edit')
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('name', 'Name*', ['class' => 'control-label']) !!}
+                    {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('name'))
+                        <p class="help-block">
+                            {{ $errors->first('name') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
+                    {!! Form::text('description', old('description'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('description'))
+                        <p class="help-block">
+                            {{ $errors->first('description') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('movie_file', 'Movie file', ['class' => 'control-label']) !!}
+                    @if ($movie->movie_file)
+                        <a href="{{ asset('uploads/'.$movie->movie_file) }}" target="_blank">Download file</a>
+                    @endif
+                    {!! Form::file('movie_file', ['class' => 'form-control']) !!}
+                    {!! Form::hidden('movie_file_max_size', 1024) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('movie_file'))
+                        <p class="help-block">
+                            {{ $errors->first('movie_file') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('answer', 'Answer*', ['class' => 'control-label']) !!}
+                    {!! Form::text('answer', old('answer'), ['class' => 'form-control', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('answer'))
+                        <p class="help-block">
+                            {{ $errors->first('answer') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('level_id', 'Level*', ['class' => 'control-label']) !!}
+                    {!! Form::select('level_id', $levels, old('level_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('level_id'))
+                        <p class="help-block">
+                            {{ $errors->first('level_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('language_id', 'Language*', ['class' => 'control-label']) !!}
+                    {!! Form::select('language_id', $languages, old('language_id'), ['class' => 'form-control select2']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('language_id'))
+                        <p class="help-block">
+                            {{ $errors->first('language_id') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            
+        </div>
     </div>
 
-    <form action="{{ action('MoviesController@update', $movie->id) }}" method="POST" enctype="multipart/form-data">
-
-        {{ csrf_field() }}
-
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" value="{{ $movie->name }}">
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" class="form-control" name="description" id="description" value="{{ $movie->description }}">
-        </div>
-
-        <div class="form-group">
-            <label for="path">Upload file <sup class="text-danger">*</sup></label>
-            <p class="form-control"> {{ $movie->path }} </p>
-            <input type="file" class="form-control" name="path" id="path" value="{{ $movie->path }}">
-        </div>
-
-        <div class="form-group">
-            <label for="answer">Answer <sup class="text-danger">*</sup></label>
-            <input type="text" class="form-control" name="answer" id="answer" value="{{ $movie->answer }}">
-        </div>
-
-        <div class="form-group">
-            <label for="level">Level <sup class="text-danger">*</sup></label>
-            <select class="form-control" name="level_id">
-                @foreach($levels as $level)
-                    <option value="{{ $level->id }}">{{ $level->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <input type="submit" class="btn btn-success" value="Save">
-
-    </form>
-
+    {!! Form::submit(trans('quickadmin.update'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::close() !!}
 @stop
+
