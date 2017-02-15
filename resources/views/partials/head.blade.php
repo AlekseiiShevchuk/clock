@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>
-    Quickadmin
+    Clock Admin Panel
 </title>
 
 <meta http-equiv="X-UA-Compatible"

@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <a href="{{ url('/') }}"
                class="navbar-brand">
-                Quickadmin
+                Clock Admin Panel
             </a>
         </div>
         <a href="javascript:;"
