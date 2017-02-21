@@ -32,10 +32,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('movies_mass_destroy', ['uses' => 'MoviesController@massDestroy', 'as' => 'movies.mass_destroy']);
 	Route::resource('players', 'PlayersController');
     Route::post('players_mass_destroy', ['uses' => 'PlayersController@massDestroy', 'as' => 'players.mass_destroy']);
-    Route::resource('playermoviecollections', 'playermoviecollectionsController');
-    Route::post('playermoviecollections_mass_destroy', ['uses' => 'playermoviecollectionsController@massDestroy', 'as' => 'playermoviecollections.mass_destroy']);
-    Route::resource('playermovies', 'playermoviesController');
-    Route::post('playermovies_mass_destroy', ['uses' => 'playermoviesController@massDestroy', 'as' => 'playermovies.mass_destroy']);
+    Route::resource('playermoviecollections', 'PlayerMovieCollectionsController');
+    Route::post('playermoviecollections_mass_destroy', ['uses' => 'PlayerMovieCollectionsController@massDestroy', 'as' => 'playermoviecollections.mass_destroy']);
+    Route::resource('playermovies', 'PlayerMoviesController');
+    Route::post('playermovies_mass_destroy', ['uses' => 'PlayerMoviesController@massDestroy', 'as' => 'playermovies.mass_destroy']);
     Route::resource('abuses', 'AbusesController');
     Route::post('abuses_mass_destroy', ['uses' => 'AbusesController@massDestroy', 'as' => 'abuses.mass_destroy']);
 });
