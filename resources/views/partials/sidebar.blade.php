@@ -68,6 +68,42 @@
             </li>
             @endcan
             
+            @can('player_access')
+            <li class="{{ $request->segment(1) == 'players' ? 'active' : '' }}">
+                <a href="{{ route('players.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('quickadmin.player.title')</span>
+                </a>
+            </li>
+            @endcan
+            
+            @can('playerMovieCollection_access')
+            <li class="{{ $request->segment(1) == 'playerMovieCollections' ? 'active' : '' }}">
+                <a href="{{ route('playermoviecollections.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('quickadmin.playerMovieCollection.title')</span>
+                </a>
+            </li>
+            @endcan
+            
+            @can('playerMovie_access')
+            <li class="{{ $request->segment(1) == 'playerMovies' ? 'active' : '' }}">
+                <a href="{{ route('playermovies.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('quickadmin.playerMovie.title')</span>
+                </a>
+            </li>
+            @endcan
+            
+            @can('abus_access')
+            <li class="{{ $request->segment(1) == 'abuses' ? 'active' : '' }}">
+                <a href="{{ route('abuses.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('quickadmin.abuses.title')</span>
+                </a>
+            </li>
+            @endcan
+            
 
     <li>
                 <a href="#logout" onclick="$('#logout').submit();">

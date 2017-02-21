@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\FileUploadTrait;
+use App\Http\Requests\ApiStorePlayerMoviesRequest;
+use App\Http\Requests\ApiUpdatePlayerMoviesRequest;
+use App\PlayerMovie;
+use Illuminate\Support\Facades\Auth;
+
+class PlayerMoviesController extends Controller
+{
+    use FileUploadTrait;
+
+    /*    public function index()
+        {
+            return PlayerMovie::all();
+        }
+
+        public function show($id)
+        {
+            return PlayerMovie::findOrFail($id);
+        }
+    */
+    public function update(ApiUpdatePlayerMoviesRequest $request, $id)
+    {
+        $request = $this->saveFiles($request);
+        $playerMovie = PlayerMovie::findOrFail($id);
+        $playerMovie->update($request->only([
+            'name',
+            'description',
+            'answer',
+            'language_id',
+            'collection_id'
+        ]));
+
+        return $playerMovie;
+    }
+
+    public function store(ApiStorePlayerMoviesRequest $request)
+    {
+        $request = $this->saveFiles($request);
+        $playerMovie = PlayerMovie::create($request->only([
+            'name',
+            'description',
+            'answer',
+            'movie_file',
+            'language_id',
+            'collection_id'
+        ]));
+        $playerMovie->moderated = PlayerMovie::$enum_moderated['onModeration'];
+        $playerMovie->player_id = Auth::user()->id;
+        $playerMovie->save();
+
+        return $playerMovie;
+    }
+
+    public function destroy(ApiUpdatePlayerMoviesRequest $request, $id)
+    {
+        $playerMovie = PlayerMovie::findOrFail($id);
+        $playerMovie->delete();
+        return response('', 204);
+    }
+}

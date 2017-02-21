@@ -108,6 +108,74 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('movie_delete', function ($user) {
             return in_array($user->role_id, [1]);
         });
+		
+		// Auth gates for: Player
+        Gate::define('player_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('player_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('player_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('player_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('player_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: PlayerMovieCollection
+        Gate::define('playerMovieCollection_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovieCollection_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovieCollection_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovieCollection_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovieCollection_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: PlayerMovie
+        Gate::define('playerMovie_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovie_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovie_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovie_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('playerMovie_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        // Auth gates for: Abuses
+        Gate::define('abus_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('abus_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('abus_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('abus_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('abus_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
 
     }
 }

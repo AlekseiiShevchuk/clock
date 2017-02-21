@@ -110,7 +110,7 @@ class LevelsController extends Controller
             return abort(401);
         }
         $relations = [
-            'languages' => \App\Language::get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_admin',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
             'movies' => \App\Movie::where('level_id', $id)->get(),
         ];
 
