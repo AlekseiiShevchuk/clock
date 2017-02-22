@@ -24,8 +24,6 @@ class UpdatePlayersRequest extends FormRequest
     {
         return [
             
-            'device_id' => 'required|unique:players,device_id,'.$this->route('player'),
-            
         ];
     }
 }
