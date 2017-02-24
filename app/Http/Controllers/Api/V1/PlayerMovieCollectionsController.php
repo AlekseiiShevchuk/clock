@@ -39,10 +39,13 @@ class PlayerMovieCollectionsController extends Controller
         return $playerMovieCollection;
     }
 
-//    public function destroy($id)
-//    {
-//        $playerMovieCollection = PlayerMovieCollection::findOrFail($id);
-//        $playerMovieCollection->delete();
-//        return '';
-//    }
+    public function destroy($id)
+    {
+        $playerMovieCollection = PlayerMovieCollection::findOrFail($id);
+        foreach ($playerMovieCollection->movies as $movie){
+            $movie->delete();
+        }
+        $playerMovieCollection->delete();
+        return response('', 204);
+    }
 }
