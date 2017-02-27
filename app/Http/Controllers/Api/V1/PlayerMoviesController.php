@@ -70,6 +70,7 @@ class PlayerMoviesController extends Controller
         $oldMovie = $movie->toArray();
         $oldMovie['collection_id'] = $collection->id;
         $newMovie = PlayerMovie::create($oldMovie);
+        $collection->touch();
         return $collection->fresh('movies');
     }
 }
