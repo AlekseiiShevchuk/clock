@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Requests\ApiStorePlayerMoviesRequest;
 use App\Http\Requests\ApiUpdatePlayerMoviesRequest;
-use App\Movie;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PlayerMoviesController extends Controller
@@ -65,11 +65,15 @@ class PlayerMoviesController extends Controller
         return response('', 204);
     }
 
-    public function copyMovieToOtherCollection(PlayerMovie $movie, PlayerMovieCollection $collection)
+    public function copyMoviesToOtherCollection(Request $request, PlayerMovieCollection $collection)
     {
-        $oldMovie = $movie->toArray();
-        $oldMovie['collection_id'] = $collection->id;
-        $newMovie = PlayerMovie::create($oldMovie);
+        $arrayOfMovieIds = $request->get('array_of_player_movie_ids');
+        foreach ($arrayOfMovieIds as $id) {
+            $movie = PlayerMovie::findOrFail($id);
+            $oldMovie = $movie->toArray();
+            $oldMovie['collection_id'] = $collection->id;
+            $newMovie = PlayerMovie::create($oldMovie);
+        }
         $collection->touch();
         return $collection->fresh('movies');
     }
