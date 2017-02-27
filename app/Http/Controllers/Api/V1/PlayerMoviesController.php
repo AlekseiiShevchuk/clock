@@ -8,6 +8,7 @@ use App\Http\Requests\ApiStorePlayerMoviesRequest;
 use App\Http\Requests\ApiUpdatePlayerMoviesRequest;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,13 +69,15 @@ class PlayerMoviesController extends Controller
     public function copyMoviesToOtherCollection(Request $request, PlayerMovieCollection $collection)
     {
         $arrayOfMovieIds = $request->get('array_of_player_movie_ids');
+        $newMovies = new Collection();
         foreach ($arrayOfMovieIds as $id) {
             $movie = PlayerMovie::findOrFail($id);
             $oldMovie = $movie->toArray();
             $oldMovie['collection_id'] = $collection->id;
             $newMovie = PlayerMovie::create($oldMovie);
+            $newMovies->add($newMovie);
         }
         $collection->touch();
-        return $collection->fresh('movies');
+        return $newMovies;
     }
 }
