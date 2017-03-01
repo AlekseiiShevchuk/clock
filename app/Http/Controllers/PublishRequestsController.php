@@ -38,7 +38,7 @@ class PublishRequestsController extends Controller
             return abort(401);
         }
         $relations = [
-            'player_movies' => \App\Playermovie::get()->pluck('name', 'id')->prepend('Please select', ''),
+            'player_movies' => \App\PlayerMovie::get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
 
         return view('publish_requests.create', $relations);
