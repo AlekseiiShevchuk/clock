@@ -177,5 +177,21 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($user->role_id, [1]);
         });
 
+		        // Auth gates for: Publish request
+        Gate::define('publish_request_access', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('publish_request_create', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('publish_request_edit', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('publish_request_view', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+        Gate::define('publish_request_delete', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
     }
 }

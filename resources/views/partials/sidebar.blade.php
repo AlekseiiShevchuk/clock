@@ -103,6 +103,14 @@
                 </a>
             </li>
             @endcan
+			
+
+            <li class="{{ $request->segment(1) == 'publish_requests' ? 'active' : '' }}">
+                <a href="{{ route('publish_requests.index') }}">
+                    <i class="fa fa-puzzle-piece"></i>
+                    <span class="title">@lang('quickadmin.publish-request.title')</span>
+                </a>
+            </li>
             
 
     <li>

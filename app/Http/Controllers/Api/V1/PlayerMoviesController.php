@@ -8,6 +8,7 @@ use App\Http\Requests\ApiStorePlayerMoviesRequest;
 use App\Http\Requests\ApiUpdatePlayerMoviesRequest;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
+use App\PublishRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,5 +80,22 @@ class PlayerMoviesController extends Controller
         }
         $collection->touch();
         return $newMovies;
+    }
+
+    public function makePublishRequest(PlayerMovie $playerMovie)
+    {
+        $publish_request = PublishRequest::where('player_movie_id', $playerMovie->id)->first();
+
+        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 0){
+            return response('this movie already waiting for publishing', '400');
+        }
+        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 1){
+            return response('this movie is already published', '400');
+        }
+
+        $publish_request = PublishRequest::create([
+            'player_movie_id' => $playerMovie->id
+        ]);
+        return response('Publish request successfully created', 201);
     }
 }

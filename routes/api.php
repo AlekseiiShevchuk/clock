@@ -12,6 +12,7 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
         Route::resource('player-movie-collections', 'PlayerMovieCollectionsController');
         Route::resource('player-movies', 'PlayerMoviesController');
         Route::post('player-movies/copy-to-other-collection/{collection}', 'PlayerMoviesController@copyMoviesToOtherCollection');
+        Route::get('player-movies/{playerMovie}/make-publish-request', 'PlayerMoviesController@makePublishRequest');
 
         Route::resource('abuses', 'AbusesController');
 

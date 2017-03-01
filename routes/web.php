@@ -38,4 +38,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('playermovies_mass_destroy', ['uses' => 'PlayerMoviesController@massDestroy', 'as' => 'playermovies.mass_destroy']);
     Route::resource('abuses', 'AbusesController');
     Route::post('abuses_mass_destroy', ['uses' => 'AbusesController@massDestroy', 'as' => 'abuses.mass_destroy']);
+	Route::resource('publish_requests', 'PublishRequestsController');
+    Route::post('publish_requests_mass_destroy', ['uses' => 'PublishRequestsController@massDestroy', 'as' => 'publish_requests.mass_destroy']);
 });
