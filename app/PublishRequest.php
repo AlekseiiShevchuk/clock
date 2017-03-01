@@ -29,7 +29,7 @@ class PublishRequest extends Model
     
     public function player_movie()
     {
-        return $this->belongsTo(Playermovie::class, 'player_movie_id')->withTrashed();
+        return $this->belongsTo(PlayerMovie::class, 'player_movie_id')->withTrashed();
     }
 
     public function published_to()
