@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    {!! Form::submit(trans('quickadmin.update'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit('Publish', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
 @stop
 

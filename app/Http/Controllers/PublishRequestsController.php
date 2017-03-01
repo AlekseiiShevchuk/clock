@@ -76,6 +76,13 @@ class PublishRequestsController extends Controller
             'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
 
+        //add language for levels list
+        foreach ($relations['levels'] as $levelId => $levelName) {
+            if ($levelId < 1){continue;}
+            $levelLanguage = Level::find($levelId)->language->name;
+            $relations['levels'][$levelId] .= ' | ' . $levelLanguage;
+        }
+
         $publish_request = PublishRequest::findOrFail($id);
 
         return view('publish_requests.edit', compact('publish_request') + $relations);
