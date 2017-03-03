@@ -15,9 +15,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 */
 class PlayerMovieCollection extends Model
 {
+    const GROUP_CHALLENGE = 'group_challenge';
+    const SINGLE_CHALLENGE = 'single_challenge';
+    const STATUS_COMPOSING = 'composing';
+    const STATUS_STARTED = 'started';
+
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'player_id', 'language_id'];
+    protected $fillable = ['name', 'description', 'player_id', 'language_id','type','status'];
     
 
     /**
@@ -51,6 +56,11 @@ class PlayerMovieCollection extends Model
     public function movies()
     {
         return $this->hasMany(PlayerMovie::class,'collection_id');
+    }
+
+    public function players()
+    {
+        return $this->belongsToMany(Player::class, 'player_movie_collection_player');
     }
     
 }

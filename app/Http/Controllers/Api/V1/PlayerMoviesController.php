@@ -69,6 +69,9 @@ class PlayerMoviesController extends Controller
 
     public function copyMoviesToOtherCollection(Request $request, PlayerMovieCollection $collection)
     {
+        if($collection->status == PlayerMovieCollection::STATUS_STARTED){
+            return response('The challenge is already started by owner, now you can not add any players or movies', 400);
+        }
         $arrayOfMovieIds = $request->get('array_of_player_movie_ids');
         $newMovies = new Collection();
         foreach ($arrayOfMovieIds as $id) {

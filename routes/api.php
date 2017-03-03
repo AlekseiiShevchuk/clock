@@ -10,6 +10,9 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
         Route::put('profile', 'PlayersController@update');
 
         Route::resource('player-movie-collections', 'PlayerMovieCollectionsController');
+        Route::get('player-movie-collections/{playerMovieCollection}/join-challenge', 'PlayerMovieCollectionsController@addPlayerToCollection');
+        Route::get('player-movie-collections/{playerMovieCollection}/start-group-challenge', 'PlayerMovieCollectionsController@startGroupChallenge');
+
         Route::resource('player-movies', 'PlayerMoviesController');
         Route::post('player-movies/copy-to-other-collection/{collection}', 'PlayerMoviesController@copyMoviesToOtherCollection');
         Route::get('player-movies/{playerMovie}/make-publish-request', 'PlayerMoviesController@makePublishRequest');

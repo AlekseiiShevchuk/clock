@@ -25,7 +25,8 @@ class ApiStorePlayerMovieCollectionsRequest extends FormRequest
         return [
             'language_id' => 'required',
             'name' => 'required',
-            
+            'type' => 'sometimes|in:single_challenge,group_challenge',
+
         ];
     }
 }
