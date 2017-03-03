@@ -69,8 +69,9 @@ class PlayerMoviesController extends Controller
 
     public function copyMoviesToOtherCollection(Request $request, PlayerMovieCollection $collection)
     {
-        if($collection->status == PlayerMovieCollection::STATUS_STARTED){
-            return response('The challenge is already started by owner, now you can not add any players or movies', 400);
+        if ($collection->status == PlayerMovieCollection::STATUS_STARTED) {
+            return response()->json('The challenge is already started by owner, now you can not add any players or movies',
+                400);
         }
         $arrayOfMovieIds = $request->get('array_of_player_movie_ids');
         $newMovies = new Collection();
@@ -89,16 +90,16 @@ class PlayerMoviesController extends Controller
     {
         $publish_request = PublishRequest::where('player_movie_id', $playerMovie->id)->first();
 
-        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 0){
-            return response('this movie already waiting for publishing', '400');
+        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 0) {
+            return response()->json('this movie already waiting for publishing', '400');
         }
-        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 1){
-            return response('this movie is already published', '400');
+        if ($publish_request instanceof PublishRequest && $publish_request->is_published == 1) {
+            return response()->json('this movie is already published', '400');
         }
 
         $publish_request = PublishRequest::create([
             'player_movie_id' => $playerMovie->id
         ]);
-        return response('Publish request successfully created', 201);
+        return response()->json('Publish request successfully created', 201);
     }
 }
