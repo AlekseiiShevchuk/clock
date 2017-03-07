@@ -24,8 +24,7 @@ class StoreMoviesRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            
-            'movie_file' => 'required',
+            'movie_file' => 'required|max:' . env('MAX_SIZE_UPLOAD_VIDEO'),
             'answer' => 'required',
             'level_id' => 'required',
             'language_id' => 'required',

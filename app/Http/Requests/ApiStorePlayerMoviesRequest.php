@@ -27,7 +27,7 @@ class ApiStorePlayerMoviesRequest extends FormRequest
             'collection_id' => 'required',
             'name' => 'required',
             'answer' => 'required',
-            'movie_file' => 'required',
+            'movie_file' => 'required|max:' . env('MAX_SIZE_UPLOAD_VIDEO'),
             
         ];
     }
