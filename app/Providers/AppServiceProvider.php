@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Observers\PlayerMovieObserver;
 use App\Observers\PlayerObserver;
 use App\Player;
+use App\PlayerMovie;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Player::observe(PlayerObserver::class);
+        PlayerMovie::observe(PlayerMovieObserver::class);
     }
 
     /**
