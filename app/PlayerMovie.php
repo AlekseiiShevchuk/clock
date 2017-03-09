@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $movie_file
  * @property enum $moderated
  */
-class PlayerMovie extends Model
+class PlayerMovie extends Model implements HasMovieFileContract
 {
 
     public function __construct(array $attributes = [])
@@ -45,6 +45,22 @@ class PlayerMovie extends Model
         "Accepted" => "Accepted",
         "Declined" => "Declined"
     ];
+
+    public function getMovieFileName()
+    {
+        return $this->movie_file;
+    }
+
+    public function setMovieFileName($name)
+    {
+        $this->movie_file = $name;
+        $this->save();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set to null if empty

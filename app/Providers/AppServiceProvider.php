@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Movie;
+use App\Observers\MovieObserver;
 use App\Observers\PlayerMovieObserver;
 use App\Observers\PlayerObserver;
 use App\Player;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Player::observe(PlayerObserver::class);
         PlayerMovie::observe(PlayerMovieObserver::class);
+        Movie::observe(MovieObserver::class);
     }
 
     /**

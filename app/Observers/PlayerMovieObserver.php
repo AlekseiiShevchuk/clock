@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Jobs\OptimizePlayerMovieVideoFile;
+use App\Jobs\OptimizeVideoFile;
 use App\PlayerMovie;
 use Illuminate\Support\Facades\Queue;
 
@@ -21,7 +21,7 @@ class PlayerMovieObserver
      */
     public function created(PlayerMovie $playerMovie)
     {
-        dispatch(new OptimizePlayerMovieVideoFile($playerMovie));
+        dispatch(new OptimizeVideoFile($playerMovie));
     }
 
     public function creating(PlayerMovie $playerMovie)

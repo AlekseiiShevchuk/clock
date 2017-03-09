@@ -15,12 +15,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $level
  * @property string $language
 */
-class Movie extends Model
+class Movie extends Model implements HasMovieFileContract
 {
     use SoftDeletes;
 
     protected $fillable = ['name', 'description', 'movie_file', 'answer', 'level_id', 'language_id'];
-    
+
+    public function getMovieFileName()
+    {
+        return $this->movie_file;
+    }
+
+    public function setMovieFileName($name)
+    {
+        $this->movie_file = $name;
+        $this->save();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set to null if empty

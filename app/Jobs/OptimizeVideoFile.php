@@ -2,16 +2,16 @@
 
 namespace App\Jobs;
 
-use App\PlayerMovie;
+use App\HasMovieFileContract;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class OptimizePlayerMovieVideoFile implements ShouldQueue
+class OptimizeVideoFile implements ShouldQueue
 {
-    protected $playerMovie;
+    protected $objectWithMovie;
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,9 +19,9 @@ class OptimizePlayerMovieVideoFile implements ShouldQueue
      * Create a new job instance.
      *
      */
-    public function __construct(PlayerMovie $playerMovie)
+    public function __construct(HasMovieFileContract $objectWithMovie)
     {
-        $this->playerMovie = $playerMovie;
+        $this->objectWithMovie = $objectWithMovie;
     }
 
     /**
@@ -31,15 +31,15 @@ class OptimizePlayerMovieVideoFile implements ShouldQueue
      */
     public function handle()
     {
-        $convertedVideoName = $this->playerMovie->id . '.mp4';
+        $convertedVideoName = $this->objectWithMovie->getQualifiedKeyName() . '_' . $this->objectWithMovie->getId() .  '.mp4';
 
-        $in = public_path('uploads/' . $this->playerMovie->movie_file);
+        $in = public_path('uploads/' . $this->objectWithMovie->getMovieFileName());
         $out = public_path('uploads/' . $convertedVideoName);
 
         $outputAfterCommandRun = `ffmpeg -y -i {$in} -acodec libmp3lame -ar 44100 -ac 1 -vcodec libx264 -s 640x360 {$out}`;
         echo $outputAfterCommandRun;
-        $this->playerMovie->movie_file = $convertedVideoName;
-        $this->playerMovie->save();
+        $this->objectWithMovie->setMovieFileName($convertedVideoName);
+
         unlink($in);
     }
 }
