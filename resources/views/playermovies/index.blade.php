@@ -56,6 +56,7 @@
                                     @can('playerMovie_edit')
                                     <a href="{{ route('playermovies.edit',[$playerMovie->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
                                     @endcan
+                                    <a href="{{ route('playermovies.clone-to-level',[$playerMovie->id]) }}" class="btn btn-xs btn-info">clone to level</a>
                                     @can('playerMovie_delete')
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
