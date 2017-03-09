@@ -95,18 +95,6 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 form-group">
-                    {!! Form::label('moderated', 'Moderated', ['class' => 'control-label']) !!}
-                    {!! Form::select('moderated', $enum_moderated, old('moderated'), ['class' => 'form-control select2']) !!}
-                    <p class="help-block"></p>
-                    @if($errors->has('moderated'))
-                        <p class="help-block">
-                            {{ $errors->first('moderated') }}
-                        </p>
-                    @endif
-                </div>
-            </div>
             
         </div>
     </div>
