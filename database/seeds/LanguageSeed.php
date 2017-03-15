@@ -623,7 +623,7 @@ class LanguageSeed extends Seeder
         ];
 
         foreach ($languages as $abbr => $name) {
-            if ($abbr == 'en') {
+            if ($abbr == 'en' || $abbr == 'sv') {
                 \App\Language::firstOrCreate([
                     'abbreviation' => $abbr,
                     'name' => $name,
