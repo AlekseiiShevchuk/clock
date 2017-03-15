@@ -24,6 +24,7 @@
                     <th>@lang('quickadmin.publish-request.fields.player-movie')</th>
                     <th>Movie file</th>
                     <th>@lang('quickadmin.publish-request.fields.is-published')</th>
+                    <th>Language</th>
                     <th>created at</th>
                     <th>updated at</th>
                     <th>Published to</th>
@@ -51,6 +52,7 @@
                                     Wait for publishing
                                 @endif
                             </td>
+                            <td>{{ $publish_request->player_movie->language->name or '' }}</td>
                             <td>{{ $publish_request->created_at or '' }}</td>
                             <td>{{ $publish_request->updated_at or '' }}</td>
                             <td>
