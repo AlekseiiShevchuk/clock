@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\HasMovieFileContract;
+use App\Movie;
+use App\PlayerMovie;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,14 +33,25 @@ class OptimizeVideoFile implements ShouldQueue
      */
     public function handle()
     {
-        $convertedVideoName = $this->objectWithMovie->getQualifiedKeyName() . '_' . $this->objectWithMovie->getId() .  '.mp4';
+        $movies = Movie::where('movie_file', $this->objectWithMovie->getMovieFileName())->get();
+        $playerMovies = PlayerMovie::where('movie_file', $this->objectWithMovie->getMovieFileName())->get();
+
+        $convertedVideoName = $this->objectWithMovie->getQualifiedKeyName() . '_' . $this->objectWithMovie->getId() . '.mp4';
 
         $in = public_path('uploads/' . $this->objectWithMovie->getMovieFileName());
         $out = public_path('uploads/' . $convertedVideoName);
 
         $outputAfterCommandRun = `ffmpeg -y -i {$in} -acodec libmp3lame -ar 44100 -ac 1 -vcodec libx264 -vf scale=640:-1 {$out}`;
-        echo $outputAfterCommandRun;
+
         $this->objectWithMovie->setMovieFileName($convertedVideoName);
+
+        foreach ($movies as $movie) {
+            $movie->setMovieFileName($convertedVideoName);
+        }
+
+        foreach ($playerMovies as $movie) {
+            $movie->setMovieFileName($convertedVideoName);
+        }
 
         unlink($in);
     }
