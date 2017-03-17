@@ -51,7 +51,7 @@ class PlayerMoviesController extends Controller
         //add language for collections list
         foreach ($relations['collections'] as $collectionId => $collectionName) {
             if ($collectionId < 1){continue;}
-            $collectionPlayer = PlayerMovieCollection::find($collectionId)->player->nickname;
+            $collectionPlayer = PlayerMovieCollection::find($collectionId)->player->device_id;
             $relations['collections'][$collectionId] .= ' | for Player: ' . $collectionPlayer;
         }
         return view('playermovies.create', compact('enum_moderated') + $relations);

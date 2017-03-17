@@ -104,4 +104,9 @@ class PlayerMovie extends Model implements HasMovieFileContract
         return $this->belongsTo(PlayerMovieCollection::class, 'collection_id')->withTrashed();
     }
 
+    public function publish_request()
+    {
+        return $this->belongsTo(PublishRequest::class,'id','player_movie_id');
+    }
+
 }
