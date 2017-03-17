@@ -31,13 +31,7 @@ class PlayerMoviesController extends Controller
     {
         $request = $this->saveFiles($request);
         $playerMovie = PlayerMovie::findOrFail($id);
-        $playerMovie->update($request->only([
-            'name',
-            'description',
-            'answer',
-            'language_id',
-            'collection_id'
-        ]));
+        $playerMovie->update($request->all());
 
         return $playerMovie;
     }
@@ -45,14 +39,7 @@ class PlayerMoviesController extends Controller
     public function store(ApiStorePlayerMoviesRequest $request)
     {
         $request = $this->saveFiles($request);
-        $playerMovie = PlayerMovie::create($request->only([
-            'name',
-            'description',
-            'answer',
-            'movie_file',
-            'language_id',
-            'collection_id'
-        ]));
+        $playerMovie = PlayerMovie::create($request->all());
         $playerMovie->moderated = PlayerMovie::$enum_moderated['onModeration'];
         $playerMovie->player_id = Auth::user()->id;
         $playerMovie->save();

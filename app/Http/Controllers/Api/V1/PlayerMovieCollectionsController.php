@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiStorePlayerMovieCollectionsRequest;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
+use App\PublishRequest;
 use Illuminate\Support\Facades\Auth;
 
 class PlayerMovieCollectionsController extends Controller
@@ -26,7 +27,7 @@ class PlayerMovieCollectionsController extends Controller
         $playerMovieCollection->update($request->only(['name', 'description', 'language_id']));
         $playerMovieCollection->player_id = Auth::user()->id;
         $playerMovieCollection->save();
-
+        PublishRequest::setHidden(['id']);
         return $playerMovieCollection->load(['movies.publish_request', 'players']);
     }
 
