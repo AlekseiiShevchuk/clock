@@ -13,7 +13,7 @@ class PlayersController extends Controller
     public function show()
     {
         $this->addLanguageCollectionIfDoesNotExist(Auth::user());
-        return Auth::user()->load('collections.movies');
+        return Auth::user()->load('collections.movies.publish_request');
     }
 
     public function update(UpdatePlayersRequest $request)
