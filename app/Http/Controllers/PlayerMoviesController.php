@@ -26,7 +26,7 @@ class PlayerMoviesController extends Controller
         if (!Gate::allows('playerMovie_access')) {
             return abort(401);
         }
-        $playerMovies = PlayerMovie::all();
+        $playerMovies = PlayerMovie::withTrashed()->get();
 
         return view('playermovies.index', compact('playerMovies'));
     }

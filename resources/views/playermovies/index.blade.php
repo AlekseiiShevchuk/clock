@@ -29,6 +29,7 @@
                         <th>@lang('quickadmin.playerMovie.fields.answer')</th>
                         <th>@lang('quickadmin.playerMovie.fields.movie-file')</th>
                         <th>@lang('quickadmin.playerMovie.fields.moderated')</th>
+                        <th>deleted_at</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -49,6 +50,7 @@
                                 <td>{{ $playerMovie->answer }}</td>
                                 <td>@if($playerMovie->movie_file)<a href="{{ asset('uploads/'.$playerMovie->movie_file) }}" target="_blank">Download file</a>@endif</td>
                                 <td>{{ $playerMovie->moderated }}</td>
+                                <td>{{ $playerMovie->deleted_at }}</td>
                                 <td>
                                     @can('playerMovie_view')
                                     <a href="{{ route('playermovies.show',[$playerMovie->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
