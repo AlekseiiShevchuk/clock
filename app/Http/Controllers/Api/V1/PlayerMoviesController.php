@@ -44,7 +44,7 @@ class PlayerMoviesController extends Controller
         $playerMovie->player_id = Auth::user()->id;
         $playerMovie->save();
 
-        return $playerMovie;
+        return $playerMovie->fresh();
     }
 
     public function destroy(ApiUpdatePlayerMoviesRequest $request, $id)
