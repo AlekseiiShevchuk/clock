@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Requests\StoreMoviesRequest;
 use App\Http\Requests\UpdateMoviesRequest;
+use App\Jobs\OptimizeVideoFile;
 use App\Level;
 use App\Movie;
 use Illuminate\Http\Request;
@@ -66,7 +67,7 @@ class MoviesController extends Controller
         }
         $request = $this->saveFiles($request);
         $movie = Movie::create($request->all());
-
+        dispatch(new OptimizeVideoFile($movie));
         return redirect()->route('movies.index');
     }
 

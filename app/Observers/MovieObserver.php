@@ -21,7 +21,6 @@ class MovieObserver
      */
     public function created(Movie $movie)
     {
-        dispatch(new OptimizeVideoFile($movie));
     }
 
     public function creating(Movie $movie)

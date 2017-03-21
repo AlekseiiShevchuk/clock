@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiStorePlayerMovieCollectionsRequest;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
+use App\PublishRequest;
 use Illuminate\Support\Facades\Auth;
 
 class PlayerMovieCollectionsController extends Controller
@@ -17,7 +18,7 @@ class PlayerMovieCollectionsController extends Controller
 
     public function show($id)
     {
-        return PlayerMovieCollection::findOrFail($id)->load(['movies', 'players']);
+        return PlayerMovieCollection::findOrFail($id)->load(['movies.publish_request', 'players']);
     }
 
     public function update(ApiStorePlayerMovieCollectionsRequest $request, $id)
@@ -26,8 +27,8 @@ class PlayerMovieCollectionsController extends Controller
         $playerMovieCollection->update($request->only(['name', 'description', 'language_id']));
         $playerMovieCollection->player_id = Auth::user()->id;
         $playerMovieCollection->save();
-
-        return $playerMovieCollection->load(['movies', 'players']);
+        PublishRequest::setHidden(['id']);
+        return $playerMovieCollection->load(['movies.publish_request', 'players']);
     }
 
     public function store(ApiStorePlayerMovieCollectionsRequest $request)
@@ -66,7 +67,7 @@ class PlayerMovieCollectionsController extends Controller
         $playerMovieCollection->players()->syncWithoutDetaching([Auth::user()->id]);
         $playerMovieCollection->touch();
         $playerMovieCollection->save();
-        return $playerMovieCollection->fresh(['movies', 'players']);
+        return $playerMovieCollection->fresh(['movies.publish_request', 'players']);
     }
 
     public function startGroupChallenge(PlayerMovieCollection $playerMovieCollection)
@@ -89,6 +90,6 @@ class PlayerMovieCollectionsController extends Controller
 
         $playerMovieCollection->save();
 
-        return $playerMovieCollection->fresh(['movies', 'players']);
+        return $playerMovieCollection->fresh(['movies.publish_request', 'players']);
     }
 }

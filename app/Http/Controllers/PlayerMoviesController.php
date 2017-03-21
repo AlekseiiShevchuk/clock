@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePlayerMoviesRequest;
 use App\Level;
 use App\Movie;
 use App\PlayerMovie;
+use App\PlayerMovieCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,7 +26,7 @@ class PlayerMoviesController extends Controller
         if (!Gate::allows('playerMovie_access')) {
             return abort(401);
         }
-        $playerMovies = PlayerMovie::all();
+        $playerMovies = PlayerMovie::withTrashed()->get();
 
         return view('playermovies.index', compact('playerMovies'));
     }
@@ -47,7 +48,12 @@ class PlayerMoviesController extends Controller
             'collections' => \App\PlayerMovieCollection::get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
         $enum_moderated = PlayerMovie::$enum_moderated;
-
+        //add language for collections list
+        foreach ($relations['collections'] as $collectionId => $collectionName) {
+            if ($collectionId < 1){continue;}
+            $collectionPlayer = PlayerMovieCollection::find($collectionId)->player->device_id;
+            $relations['collections'][$collectionId] .= ' | for Player: ' . $collectionPlayer;
+        }
         return view('playermovies.create', compact('enum_moderated') + $relations);
     }
 
