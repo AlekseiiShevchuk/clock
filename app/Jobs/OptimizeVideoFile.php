@@ -54,8 +54,8 @@ class OptimizeVideoFile implements ShouldQueue
                 $movie->setMovieFileName($convertedVideoName);
             }
 
-            unlink($in);
         } else {
+            //delete badly converted movie file
             unlink($out);
         }
 

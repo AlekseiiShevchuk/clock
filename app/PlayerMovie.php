@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description
  * @property string $answer
  * @property string $movie_file
+ * @property string $original_movie_file
  * @property enum $moderated
  */
 class PlayerMovie extends Model implements HasMovieFileContract

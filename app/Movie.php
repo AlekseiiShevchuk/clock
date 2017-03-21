@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $description
  * @property string $movie_file
+ * @property string $original_movie_file
  * @property string $answer
  * @property string $level
  * @property string $language

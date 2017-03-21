@@ -24,6 +24,7 @@
                         <th>@lang('quickadmin.movies.fields.name')</th>
                         <th>@lang('quickadmin.movies.fields.description')</th>
                         <th>@lang('quickadmin.movies.fields.movie-file')</th>
+                        <th>Original movie file<br>(without optimization)</th>
                         <th>@lang('quickadmin.movies.fields.answer')</th>
                         <th>@lang('quickadmin.movies.fields.level')</th>
                         <th>@lang('quickadmin.movies.fields.language')</th>
@@ -42,6 +43,7 @@
                                 <td>{{ $movie->name }}</td>
                                 <td>{{ $movie->description }}</td>
                                 <td>@if($movie->movie_file)<a href="{{ asset('uploads/'.$movie->movie_file) }}" target="_blank">Download file</a>@endif</td>
+                                <td>@if($movie->original_movie_file)<a href="{{ asset('uploads/'.$movie->original_movie_file) }}" target="_blank">Download file</a>@endif</td>
                                 <td>{{ $movie->answer }}</td>
                                 <td>{{ $movie->level->name or '' }}</td>
                                 <td>{{ $movie->language->name or '' }}</td>

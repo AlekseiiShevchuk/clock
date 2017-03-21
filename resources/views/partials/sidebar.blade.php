@@ -90,7 +90,7 @@
             <li class="{{ $request->segment(1) == 'playerMovies' ? 'active' : '' }}">
                 <a href="{{ route('playermovies.index') }}">
                     <i class="fa fa-gears"></i>
-                    <span class="title">@lang('quickadmin.playerMovie.title')</span>
+                    <span class="title">Player`s Movies</span>
                 </a>
             </li>
             @endcan

@@ -28,6 +28,7 @@
                         <th>@lang('quickadmin.playerMovie.fields.description')</th>
                         <th>@lang('quickadmin.playerMovie.fields.answer')</th>
                         <th>@lang('quickadmin.playerMovie.fields.movie-file')</th>
+                        <th>Original movie file<br>(without optimization)</th>
                         <th>@lang('quickadmin.playerMovie.fields.moderated')</th>
                         <th>deleted_at</th>
                         <th>&nbsp;</th>
@@ -49,6 +50,7 @@
                                 <td>{{ $playerMovie->description }}</td>
                                 <td>{{ $playerMovie->answer }}</td>
                                 <td>@if($playerMovie->movie_file)<a href="{{ asset('uploads/'.$playerMovie->movie_file) }}" target="_blank">Download file</a>@endif</td>
+                                <td>@if($playerMovie->original_movie_file)<a href="{{ asset('uploads/'.$playerMovie->original_movie_file) }}" target="_blank">Download file</a>@endif</td>
                                 <td>{{ $playerMovie->moderated }}</td>
                                 <td>{{ $playerMovie->deleted_at }}</td>
                                 <td>

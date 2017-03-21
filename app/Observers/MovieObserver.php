@@ -25,6 +25,9 @@ class MovieObserver
 
     public function creating(Movie $movie)
     {
+        Movie::unguard();
+        $movie->original_movie_file = $movie->movie_file;
+        Movie::reguard();
     }
 
     /**
