@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $description
  * @property string $language
-*/
+ */
 class Level extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'language_id'];
-    
+    protected $fillable = ['name', 'description', 'language_id', 'randomize_movies'];
+
 
     /**
      * Set to null if empty
@@ -27,7 +27,7 @@ class Level extends Model
     {
         $this->attributes['language_id'] = $input ? $input : null;
     }
-    
+
     public function language()
     {
         return $this->belongsTo(Language::class, 'language_id')->withTrashed();
@@ -35,7 +35,11 @@ class Level extends Model
 
     public function movies()
     {
-        return $this->hasMany(Movie::class);
+        if ($this->randomize_movies == 1) {
+            return $this->hasMany(Movie::class)->inRandomOrder();
+        } else {
+            return $this->hasMany(Movie::class);
+        }
     }
-    
+
 }

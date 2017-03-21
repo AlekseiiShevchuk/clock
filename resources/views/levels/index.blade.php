@@ -24,6 +24,7 @@
                         <th>@lang('quickadmin.levels.fields.name')</th>
                         <th>@lang('quickadmin.levels.fields.description')</th>
                         <th>@lang('quickadmin.levels.fields.language')</th>
+                        <th>Is movie list randomized?</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -39,6 +40,7 @@
                                 <td>{{ $level->name }}</td>
                                 <td>{{ $level->description }}</td>
                                 <td>{{ $level->language->name or '' }}</td>
+                                <td>{{ Form::checkbox("randomize_movies", 1, $level->randomize_movies == 1, ["disabled"]) }}</td>
                                 <td>
                                     @can('level_view')
                                     <a href="{{ route('levels.show',[$level->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>

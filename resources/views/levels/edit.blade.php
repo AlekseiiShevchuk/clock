@@ -47,6 +47,19 @@
                     @endif
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('randomize_movies', 'Randomize movies ?', ['class' => 'control-label']) !!}
+                    {!! Form::hidden('randomize_movies', 0) !!}
+                    {!! Form::checkbox('randomize_movies', 1, old('randomize_movies')) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('randomize_movies'))
+                        <p class="help-block">
+                            {{ $errors->first('randomize_movies') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
             
         </div>
     </div>
