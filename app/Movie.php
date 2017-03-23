@@ -55,6 +55,11 @@ class Movie extends Model implements HasMovieFileContract
     {
         $this->attributes['language_id'] = $input ? $input : null;
     }
+
+    public function setNameAttribute($input)
+    {
+        $this->attributes['language_id'] = $input ? $input : 'no name';
+    }
     
     public function level()
     {
