@@ -39,6 +39,6 @@ class AbusesController extends Controller
     {
         $abuse = Abuse::findOrFail($id);
         $abuse->delete();
-        return '';
+        return response()->json('',204);
     }
 }
