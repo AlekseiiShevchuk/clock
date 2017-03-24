@@ -7,6 +7,7 @@ use App\Http\Requests\ApiStorePlayerMovieCollectionsRequest;
 use App\PlayerMovie;
 use App\PlayerMovieCollection;
 use App\PublishRequest;
+use App\Services\FCMService;
 use Illuminate\Support\Facades\Auth;
 
 class PlayerMovieCollectionsController extends Controller
@@ -67,6 +68,15 @@ class PlayerMovieCollectionsController extends Controller
         $playerMovieCollection->players()->syncWithoutDetaching([Auth::user()->id]);
         $playerMovieCollection->touch();
         $playerMovieCollection->save();
+
+        if($playerMovieCollection->type == PlayerMovieCollection::SINGLE_CHALLENGE){
+            (new FCMService())->send_Notification_To_PlayerMovieCollection_Owner_After_Player_Join($playerMovieCollection, Auth::user());
+        }
+
+        if($playerMovieCollection->type == PlayerMovieCollection::GROUP_CHALLENGE){
+            (new FCMService())->send_Notification_To_All_Players_After_Player_Join($playerMovieCollection, Auth::user());
+        }
+
         return $playerMovieCollection->fresh(['movies.publish_request', 'players']);
     }
 
@@ -89,6 +99,10 @@ class PlayerMovieCollectionsController extends Controller
         }
 
         $playerMovieCollection->save();
+
+        if($playerMovieCollection->type == PlayerMovieCollection::GROUP_CHALLENGE){
+            (new FCMService())->send_Notification_To_Players_About_PlayerMovieCollection_Started($playerMovieCollection);
+        }
 
         return $playerMovieCollection->fresh(['movies.publish_request', 'players']);
     }
