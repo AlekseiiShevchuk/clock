@@ -44,6 +44,12 @@
                             <th>@lang('quickadmin.playerMovie.fields.moderated')</th>
                             <td>{{ $playerMovie->moderated }}</td>
                         </tr>
+                        <tr>
+                            <th>Administration</th>
+                            <td>
+                                <a href="{{ route('playermovies.edit',[$playerMovie->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div><!-- Nav tabs -->

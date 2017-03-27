@@ -37,7 +37,7 @@
                                     <td></td>
                                 @endcan
 
-                                <td>{{ $abuse->player_movie->name or '' }}</td>
+                                <td><a href="{{route('playermovies.show', ['id'=> $abuse->player_movie->id])}}">{{ $abuse->player_movie->name or '' }}</a> </td>
                                 <td>{{ $abuse->description }}</td>
                                 <td>{{ $abuse->email }}</td>
                                 <td>{{ $abuse->by_player->device_id or '' }}</td>

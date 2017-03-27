@@ -94,7 +94,7 @@ class PlayerMoviesController extends Controller
         ];
         $enum_moderated = PlayerMovie::$enum_moderated;
 
-        $playerMovie = PlayerMovie::findOrFail($id);
+        $playerMovie = PlayerMovie::withTrashed()->findOrFail($id);
 
         return view('playermovies.edit', compact('playerMovie', 'enum_moderated') + $relations);
     }
@@ -112,7 +112,7 @@ class PlayerMoviesController extends Controller
             return abort(401);
         }
         $request = $this->saveFiles($request);
-        $playerMovie = PlayerMovie::findOrFail($id);
+        $playerMovie = PlayerMovie::withTrashed()->findOrFail($id);
         $playerMovie->update($request->all());
 
         return redirect()->route('playermovies.index');
@@ -130,6 +130,7 @@ class PlayerMoviesController extends Controller
         if (!Gate::allows('playerMovie_view')) {
             return abort(401);
         }
+        $playerMovie = PlayerMovie::withTrashed()->findOrFail($id);
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
             'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
@@ -138,7 +139,6 @@ class PlayerMoviesController extends Controller
             'abuses' => \App\Abuse::where('player_movie_id', $id)->get(),
         ];
 
-        $playerMovie = PlayerMovie::findOrFail($id);
 
         return view('playermovies.show', compact('playerMovie') + $relations);
     }
