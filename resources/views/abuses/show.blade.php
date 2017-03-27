@@ -21,6 +21,10 @@
                             <td>{{ $abuse->description }}</td>
                         </tr>
                         <tr>
+                            <th>Email</th>
+                            <td>{{ $abuse->email }}</td>
+                        </tr>
+                        <tr>
                             <th>@lang('quickadmin.abuses.fields.by-player')</th>
                             <td>{{ $abuse->by_player->device_id or '' }}</td>
                         </tr>

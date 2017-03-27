@@ -23,6 +23,7 @@
 
                         <th>@lang('quickadmin.abuses.fields.player-movie')</th>
                         <th>@lang('quickadmin.abuses.fields.description')</th>
+                        <th>Email</th>
                         <th>@lang('quickadmin.abuses.fields.by-player')</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -38,6 +39,7 @@
 
                                 <td>{{ $abuse->player_movie->name or '' }}</td>
                                 <td>{{ $abuse->description }}</td>
+                                <td>{{ $abuse->email }}</td>
                                 <td>{{ $abuse->by_player->device_id or '' }}</td>
                                 <td>
                                     @can('abus_view')

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,9 +24,9 @@ class StoreAbusesRequest extends FormRequest
     public function rules()
     {
         return [
-            'player_movie_id' => 'required',
             'description' => 'required',
-            
+            'email' => 'sometimes|email'
+
         ];
     }
 }

@@ -16,7 +16,7 @@ class Abuse extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['description', 'player_movie_id', 'by_player_id'];
+    protected $fillable = ['description', 'player_movie_id', 'by_player_id','email'];
     
 
     /**
