@@ -23,8 +23,8 @@ class FCMService
         if ($token == null){
             return;
         }
-        $title = 'New player join ' . $playerMovieCollection->name;
-        $body = 'Player ' . $joinedPlayer->nickname . ' join challenge ' . $playerMovieCollection->name;
+        $title = 'New player joined challenge';
+        $body = 'New player joined challenge';
 
         $optionBuiler = new OptionsBuilder();
         $optionBuiler->setTimeToLive(60 * 20);
@@ -69,8 +69,8 @@ class FCMService
         if(count($tokens) < 1){
             return;
         }
-        $title = 'New player join ' . $playerMovieCollection->name;
-        $body = 'Player ' . $joinedPlayer->nickname . ' join challenge ' . $playerMovieCollection->name;
+        $title = 'New player joined challenge';
+        $body = 'New player joined challenge';
 
         $optionBuiler = new OptionsBuilder();
         $optionBuiler->setTimeToLive(60 * 20);
@@ -106,8 +106,8 @@ class FCMService
         if(count($tokens) < 1){
             return;
         }
-        $title = 'Challenge ' . $playerMovieCollection->name . ' started!';
-        $body = 'Challenge ' . $playerMovieCollection->name . ' started!';
+        $title = 'Challenge started!';
+        $body = 'Challenge started!';
 
         $optionBuiler = new OptionsBuilder();
         $optionBuiler->setTimeToLive(60 * 20);
