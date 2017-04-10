@@ -41,7 +41,8 @@ class OptimizeVideoFile implements ShouldQueue
         $in = public_path('uploads/' . $this->objectWithMovie->getMovieFileName());
         $out = public_path('uploads/' . $convertedVideoName);
 
-        $outputAfterCommandRun = `ffmpeg -y -i {$in} -acodec libmp3lame -ar 44100 -ac 1 -vcodec libx264 -vf scale=640:-1 -fs 50M {$out}`;
+//        $outputAfterCommandRun = `ffmpeg -y -i {$in} -acodec libmp3lame -ar 44100 -ac 1 -vcodec libx264 -vf scale=640:-1 -fs 50M {$out}`;
+        $outputAfterCommandRun = `ffmpeg -y -i {$in} -vcodec libx264 -vf scale=640:-1 -fs 50M {$out}`;
 
         if (filesize($out) > 100 && (filesize($out) < filesize($in))) {
             $this->objectWithMovie->setMovieFileName($convertedVideoName);
