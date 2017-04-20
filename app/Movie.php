@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description
  * @property string $movie_file
  * @property string $original_movie_file
+ * @property string $thumbnail
  * @property string $answer
  * @property string $level
  * @property string $language
@@ -20,7 +21,7 @@ class Movie extends Model implements HasMovieFileContract
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'movie_file', 'answer', 'level_id', 'language_id'];
+    protected $fillable = ['name', 'description', 'movie_file', 'answer', 'level_id', 'language_id', 'thumbnail'];
 
     public function getMovieFileName()
     {

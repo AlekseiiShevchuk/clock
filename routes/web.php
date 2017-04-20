@@ -3,6 +3,15 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
+Route::get('/thumb', function () {
+    foreach (\App\Movie::all() as $movie){
+        \App\Services\VideoThumbnailMaker::makeThumbnail($movie);
+    }
+    foreach (\App\PlayerMovie::all() as $movie){
+        \App\Services\VideoThumbnailMaker::makeThumbnail($movie);
+    }
+});
+
 // Authentication Routes...
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
 $this->post('login', 'Auth\LoginController@login')->name('auth.login');

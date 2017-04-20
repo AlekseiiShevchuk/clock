@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Jobs\OptimizeVideoFile;
 use App\Movie;
+use App\Services\VideoThumbnailMaker;
 use Illuminate\Support\Facades\Queue;
 
 class MovieObserver
@@ -21,6 +22,7 @@ class MovieObserver
      */
     public function created(Movie $movie)
     {
+        VideoThumbnailMaker::makeThumbnail($movie);
     }
 
     public function creating(Movie $movie)
@@ -39,4 +41,5 @@ class MovieObserver
     public function deleting(Movie $movie)
     {
     }
+
 }

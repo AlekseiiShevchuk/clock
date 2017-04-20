@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Jobs\OptimizeVideoFile;
 use App\PlayerMovie;
+use App\Services\VideoThumbnailMaker;
 use Illuminate\Support\Facades\Queue;
 
 class PlayerMovieObserver
@@ -22,6 +23,7 @@ class PlayerMovieObserver
     public function created(PlayerMovie $playerMovie)
     {
         dispatch(new OptimizeVideoFile($playerMovie));
+        VideoThumbnailMaker::makeThumbnail($playerMovie);
     }
 
     public function creating(PlayerMovie $playerMovie)
