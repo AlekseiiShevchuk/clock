@@ -19,11 +19,11 @@ class Language extends Model
 
     protected $fillable = ['abbreviation', 'name', 'is_active_for_admin', 'is_active_for_users'];
     protected $hidden = ['created_at','deleted_at','updated_at'];
-    protected $appends = ['namber_of_movies'];
+    protected $appends = ['number_of_movies'];
 
     public function getNumberOfMoviesAttribute()
     {
-
+        return Movie::where('language_id', $this->id)->count();
     }
     
     
