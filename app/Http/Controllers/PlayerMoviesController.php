@@ -43,7 +43,7 @@ class PlayerMoviesController extends Controller
         }
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name',
                 'id')->prepend('Please select', ''),
             'collections' => \App\PlayerMovieCollection::get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
@@ -88,7 +88,7 @@ class PlayerMoviesController extends Controller
         }
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name',
                 'id')->prepend('Please select', ''),
             'collections' => \App\PlayerMovieCollection::get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
@@ -133,7 +133,7 @@ class PlayerMoviesController extends Controller
         $playerMovie = PlayerMovie::withTrashed()->findOrFail($id);
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name',
                 'id')->prepend('Please select', ''),
             'collections' => \App\PlayerMovieCollection::get()->pluck('name', 'id')->prepend('Please select', ''),
             'abuses' => \App\Abuse::where('player_movie_id', $id)->get(),
