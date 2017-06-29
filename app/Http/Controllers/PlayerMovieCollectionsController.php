@@ -37,7 +37,7 @@ class PlayerMovieCollectionsController extends Controller
         }
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_users',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
 
         return view('playermoviecollections.create', $relations);
@@ -73,7 +73,7 @@ class PlayerMovieCollectionsController extends Controller
         }
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_users',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
         ];
 
         $playerMovieCollection = PlayerMovieCollection::findOrFail($id);
@@ -113,7 +113,7 @@ class PlayerMovieCollectionsController extends Controller
         }
         $relations = [
             'players' => \App\Player::get()->pluck('device_id', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
+            'languages' => \App\Language::where('is_active_for_users',1)->get()->pluck('name', 'id')->prepend('Please select', ''),
             'playerMovies' => \App\PlayerMovie::where('collection_id', $id)->get(),
         ];
 

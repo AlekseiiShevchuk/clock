@@ -42,7 +42,7 @@ class MoviesController extends Controller
         }
         $relations = [
             'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name', 'id')
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name', 'id')
                 ->prepend('Please select', ''),
         ];
         //add language for levels list
@@ -85,7 +85,7 @@ class MoviesController extends Controller
         }
         $relations = [
             'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name',
                 'id')->prepend('Please select', ''),
         ];
 
@@ -127,7 +127,7 @@ class MoviesController extends Controller
         }
         $relations = [
             'levels' => \App\Level::get()->pluck('name', 'id')->prepend('Please select', ''),
-            'languages' => \App\Language::where('is_active_for_admin', 1)->get()->pluck('name',
+            'languages' => \App\Language::where('is_active_for_users', 1)->get()->pluck('name',
                 'id')->prepend('Please select', ''),
         ];
 

@@ -21,7 +21,11 @@ class LanguagesController extends Controller
         if (!Gate::allows('language_access')) {
             return abort(401);
         }
-        $languages = Language::query()->orderBy('is_active_for_admin', 'desc')->get();
+        $languages = Language::query()
+            ->orderBy('is_active_for_admin', 'desc')
+            ->orderBy('is_active_for_users', 'desc')
+            ->orderBy('name', 'asc')
+            ->get();
 
         return view('languages.index', compact('languages'));
     }
