@@ -8,6 +8,8 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
@@ -33,7 +35,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -55,14 +57,18 @@ class Handler extends ExceptionHandler
             return response()->json('Method Not Allowed', 405);
         }
 
+        if ($e instanceof BadRequestHttpException) {
+            return response()->json($e->getMessage(), 400);
+        }
+
         if ($e instanceof ValidationException && ($request->expectsJson() || $request->wantsJson() || $request->isJson())) {
             $validationErrors = $e->validator->errors();
-            return response($validationErrors, 400);
+            return response()->json($validationErrors, 400);
         }
 
         if ($e instanceof \PDOException) {
             if (strtolower(env('APP_ENV')) == 'local') {
-                return response($e->getMessage(), 500);
+                return response()->json($e->getMessage(), 500);
             } else {
                 return response()->json('Internal Server Error', 500);
             }
@@ -71,7 +77,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $modelPathAsArray = explode('\\', $e->getModel());
             $model = $modelPathAsArray[count($modelPathAsArray) - 1];
-            return response($model . ' not found', 404);
+            return response()->json($model . ' not found', 404);
         }
 
         if ($e instanceof NotFoundHttpException) {
@@ -79,11 +85,19 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof AuthorizationException && ($request->expectsJson() || $request->wantsJson() || $request->isJson())) {
-            return response($e->getMessage(), 403);
+            return response()->json($e->getMessage(), 403);
         }
 
         if ($e instanceof ServiceUnavailableHttpException) {
             return response()->json('Authentication Service is not available. Try later.', 503);
+        }
+
+        if ($e instanceof AccessDeniedHttpException && ($request->expectsJson() || $request->wantsJson() || $request->isJson())) {
+            return response()->json($e->getMessage(), 401);
+        }
+
+        if ($e && ($request->expectsJson() || $request->wantsJson() || $request->isJson())) {
+            return response()->json($e->getMessage(), 503);
         }
 
         return parent::render($request, $e);
@@ -92,8 +106,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Auth\AuthenticationException $exception
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
@@ -102,6 +116,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest('login');
+        return redirect()->guest(route('auth.login'));
     }
 }
