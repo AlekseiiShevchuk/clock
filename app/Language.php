@@ -30,7 +30,7 @@ class Language extends Model
     static function getAvailableColumnsForTranslationItems()
     {
         $columns[] = 'value_name';
-        foreach (Language::where('is_active_for_users', 1)->pluck('abbreviation') as $abbr) {
+        foreach (Language::where('is_active_for_admin', 1)->pluck('abbreviation') as $abbr) {
             $columns[] = 'value_' . $abbr;
         }
 
