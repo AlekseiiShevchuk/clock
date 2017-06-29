@@ -13,7 +13,7 @@ trait FileUploadTrait
      */
     public function saveFiles(Request $request)
     {
-        if (! file_exists(public_path('uploads'))) {
+        if (!file_exists(public_path('uploads'))) {
             mkdir(public_path('uploads'), 0777);
             mkdir(public_path('uploads/thumb'), 0777);
         }
@@ -24,14 +24,14 @@ trait FileUploadTrait
             if ($request->hasFile($key)) {
                 if ($request->has($key . '_max_width') && $request->has($key . '_max_height')) {
                     // Check file width
-                    $filename = time() . '-' . $request->file($key)->getClientOriginalName();
-                    $file     = $request->file($key);
-                    $image    = Image::make($file);
-                    if (! file_exists(public_path('uploads/thumb'))) {
+                    $filename = hash('crc32b', microtime()) . '.' . $request->file($key)->getClientOriginalExtension();
+                    $file = $request->file($key);
+                    $image = Image::make($file);
+                    if (!file_exists(public_path('uploads/thumb'))) {
                         mkdir(public_path('uploads/thumb'), 0777, true);
                     }
                     Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
-                    $width  = $image->width();
+                    $width = $image->width();
                     $height = $image->height();
                     if ($width > $request->{$key . '_max_width'} && $height > $request->{$key . '_max_height'}) {
                         $image->resize($request->{$key . '_max_width'}, $request->{$key . '_max_height'});
@@ -47,7 +47,7 @@ trait FileUploadTrait
                     $image->save(public_path('uploads') . '/' . $filename);
                     $finalRequest = new Request(array_merge($finalRequest->all(), [$key => $filename]));
                 } else {
-                    $filename = time() . '-' . $request->file($key)->getClientOriginalName();
+                    $filename = hash('crc32b', microtime()) . '.' . $request->file($key)->getClientOriginalExtension();
                     $request->file($key)->move(public_path('uploads'), $filename);
                     $finalRequest = new Request(array_merge($finalRequest->all(), [$key => $filename]));
                 }

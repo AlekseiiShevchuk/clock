@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Requests\UpdateLanguagesRequest;
 use App\Language;
 use Illuminate\Support\Facades\Gate;
 
 class LanguagesController extends Controller
 {
+    use FileUploadTrait;
+
     /**
      * Display a listing of Language.
      *
@@ -18,7 +21,7 @@ class LanguagesController extends Controller
         if (!Gate::allows('language_access')) {
             return abort(401);
         }
-        $languages = Language::query()->orderBy('is_active_for_admin','desc')->get();
+        $languages = Language::query()->orderBy('is_active_for_admin', 'desc')->get();
 
         return view('languages.index', compact('languages'));
     }
@@ -52,6 +55,7 @@ class LanguagesController extends Controller
             return abort(401);
         }
         $language = Language::findOrFail($id);
+        $request = $this->saveFiles($request);
         $language->update($request->all());
 
         return redirect()->route('languages.index');

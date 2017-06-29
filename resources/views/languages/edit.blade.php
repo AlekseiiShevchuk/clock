@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="page-title">@lang('quickadmin.languages.title')</h3>
     
-    {!! Form::model($language, ['method' => 'PUT', 'route' => ['languages.update', $language->id]]) !!}
+    {!! Form::model($language, ['method' => 'PUT', 'route' => ['languages.update', $language->id], 'files' => true,]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -57,6 +57,24 @@
                     @if($errors->has('is_active_for_users'))
                         <p class="help-block">
                             {{ $errors->first('is_active_for_users') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    @if ($language->flag_image)
+                        <a href="{{ asset('uploads/'.$language->flag_image) }}" target="_blank"><img src="{{ asset('uploads/thumb/'.$language->flag_image) }}"></a>
+                    @endif
+                    {!! Form::label('flag_image', 'Flag image', ['class' => 'control-label']) !!}
+                    {!! Form::file('flag_image', ['class' => 'form-control', 'style' => 'margin-top: 4px;']) !!}
+                    {!! Form::hidden('flag_image_max_size', 16) !!}
+                    {!! Form::hidden('flag_image_max_width', 8000) !!}
+                    {!! Form::hidden('flag_image_max_height', 8000) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('flag_image'))
+                        <p class="help-block">
+                            {{ $errors->first('flag_image') }}
                         </p>
                     @endif
                 </div>

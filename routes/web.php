@@ -54,4 +54,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('abuses_mass_destroy', ['uses' => 'AbusesController@massDestroy', 'as' => 'abuses.mass_destroy']);
 	Route::resource('publish_requests', 'PublishRequestsController');
     Route::post('publish_requests_mass_destroy', ['uses' => 'PublishRequestsController@massDestroy', 'as' => 'publish_requests.mass_destroy']);
+
+    Route::resource('translation_items', 'TranslationItemsController');
+    Route::post('translation_items_mass_destroy',
+        ['uses' => 'TranslationItemsController@massDestroy', 'as' => 'translation_items.mass_destroy']);
+    Route::put('translation_items_mass_update',
+        ['uses' => 'TranslationItemsController@massUpdate'])->name('translation_items.mass_update');
+
+    Route::post('/excel-import', 'TranslationItemsController@importExcel');
+
+    Route::get('/excel-export/{type}', 'TranslationItemsController@exportExcel');
 });
