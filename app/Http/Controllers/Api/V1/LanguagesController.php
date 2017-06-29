@@ -13,11 +13,9 @@ class LanguagesController extends Controller
 {
     public function index()
     {
-        return Language::where('is_active_for_users',1)->get()->sortByDesc('number_of_movies')->values()->all();
-    }
-
-    public function translationItemsList()
-    {
-        return TranslationItem::all(Language::getAvailableColumnsForTranslationItems());
+        return [
+            'available_languages' => Language::where('is_active_for_users',1)->get()->sortByDesc('number_of_movies')->values()->all(),
+            'translations' => TranslationItem::all(Language::getAvailableColumnsForTranslationItems())
+        ];
     }
 }

@@ -3,7 +3,6 @@
 Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], function () {
 
         Route::get('languages', 'LanguagesController@index');
-        Route::get('translations', 'LanguagesController@translationItemsList');
 
         Route::resource('levels', 'LevelsController');
 
