@@ -37,7 +37,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('is_active_for_admin', 'Is active for admin*', ['class' => 'control-label']) !!}
+                    {!! Form::label('is_active_for_admin', 'Is active in Translations*', ['class' => 'control-label']) !!}
                     {!! Form::hidden('is_active_for_admin', 0) !!}
                     {!! Form::checkbox('is_active_for_admin', 1, old('is_active_for_admin')) !!}
                     <p class="help-block"></p>
