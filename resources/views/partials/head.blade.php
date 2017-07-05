@@ -13,8 +13,8 @@
 <link href="{{ asset('sbadmin/vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
 <link href="{{ asset('sbadmin/dist/css/sb-admin-2.css') }}" rel="stylesheet">
 <link href="{{ asset('sbadmin/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-      href="{{ url('quickadmin/css') }}/select2.min.css"/>
+<link rel="stylesheet" href="{{ url('quickadmin/css') }}/select2.min.css"/>
+<link rel="stylesheet" href="{{ url('css') }}/custom.css"/>
 <link rel="stylesheet"
       href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet"
