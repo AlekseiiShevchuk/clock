@@ -22,7 +22,15 @@ class PublishRequestsController extends Controller
         if (!Gate::allows('publish_request_access')) {
             return abort(401);
         }
-        $publish_requests = PublishRequest::all()->sortByDesc('created_at');
+
+        if (request()->has('language_id')) {
+            $publish_requests = PublishRequest::whereHas('player_movie', function ($q) {
+                $q->where('language_id', request()->get('language_id'));
+            })->orderBy('created_at', 'DESC')->get();
+        } else {
+            $publish_requests = PublishRequest::all()->sortByDesc('created_at');
+        }
+
 
         return view('publish_requests.index', compact('publish_requests'));
     }
@@ -78,7 +86,9 @@ class PublishRequestsController extends Controller
 
         //add language for levels list
         foreach ($relations['levels'] as $levelId => $levelName) {
-            if ($levelId < 1){continue;}
+            if ($levelId < 1) {
+                continue;
+            }
             $levelLanguage = Level::find($levelId)->language->name;
             $relations['levels'][$levelId] .= ' | ' . $levelLanguage;
         }

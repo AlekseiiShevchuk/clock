@@ -108,9 +108,19 @@
             <li class="{{ $request->segment(1) == 'publish_requests' ? 'active' : '' }}">
                 <a href="{{ route('publish_requests.index') }}">
                     <i class="fa fa-puzzle-piece"></i>
-                    <span class="title">@lang('quickadmin.publish-request.title')</span>
+                    <span class="title">Publish Requests (All)</span>
                 </a>
             </li>
+
+    @foreach(\App\Language::where('is_active_for_users', 1)->get() as $language)
+        <li class="{{ $request->segment(1) == 'publish_requests' ? 'active' : '' }}">
+            <a href="{{ route('publish_requests.index') }}?language_id={{$language->id}}">
+                <i class="fa fa-puzzle-piece"></i>
+                <span class="title">Publish Requests ({{$language->name}})</span>
+            </a>
+        </li>
+    @endforeach
+
             <li class="{{ $request->segment(2) == 'translation_items' ? 'active' : '' }}">
                 <a href="{{ route('translation_items.index') }}">
                     <i class="fa fa-gears"></i>
