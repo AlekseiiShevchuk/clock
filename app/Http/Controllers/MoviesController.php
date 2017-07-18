@@ -25,7 +25,7 @@ class MoviesController extends Controller
         if (!Gate::allows('movie_access')) {
             return abort(401);
         }
-        $movies = Movie::all();
+        $movies = Movie::orderBy('language_id')->orderBy('name')->get();
 
         return view('movies.index', compact('movies'));
     }

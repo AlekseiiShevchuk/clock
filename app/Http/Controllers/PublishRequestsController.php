@@ -22,7 +22,7 @@ class PublishRequestsController extends Controller
         if (!Gate::allows('publish_request_access')) {
             return abort(401);
         }
-        $publish_requests = PublishRequest::all();
+        $publish_requests = PublishRequest::all()->sortByDesc('created_at');
 
         return view('publish_requests.index', compact('publish_requests'));
     }
