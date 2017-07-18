@@ -115,7 +115,7 @@
     @foreach($languagesForRequests = \App\Language::where('is_active_for_users', 1)->get() as $language)
         @if(\App\PublishRequest::whereHas('player_movie', function ($q) use($language){
                 $q->where('language_id', $language->id);
-            })->orderBy('created_at', 'DESC')->count() > 0)
+            })->count() > 0)
             <li class="{{ $request->segment(1) == 'publish_requests' ? 'active' : '' }}">
                 <a href="{{ route('publish_requests.index') }}?language_id={{$language->id}}">
                     <i class="fa fa-puzzle-piece"></i>
